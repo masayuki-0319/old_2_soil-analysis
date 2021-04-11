@@ -134,8 +134,8 @@ const CheckSoil: React.FC = () => {
                               />
                             }
                           >
-                            {selectFieldTypes.map((row: [number, string]) => (
-                              <MenuItem value={row[0]}>{row[1]}</MenuItem>
+                            {selectFieldTypes.map((row: [number, string], index: number) => (
+                              <MenuItem key={index} value={row[0]}>{row[1]}</MenuItem>
                             ))}
                           </Select>
                         </FormControl>
@@ -165,8 +165,8 @@ const CheckSoil: React.FC = () => {
                               />
                             }
                           >
-                            {selectSoilTypes.map((row: [number, string]) => (
-                              <MenuItem value={row[0]}>{row[1]}</MenuItem>
+                            {selectSoilTypes.map((row: [number, string], index: number) => (
+                              <MenuItem key={index} value={row[0]}>{row[1]}</MenuItem>
                             ))}
                           </Select>
                         </FormControl>
