@@ -3,6 +3,8 @@ import { useStyles } from "./CheckSoilStyle";
 import Grid from "@material-ui/core/Grid";
 import Stepper from "../components/Stepper";
 import Step1 from "./Step1";
+import Step2 from "./Step2";
+import Step3 from "./Step3";
 
 const CheckSoil: React.FC = () => {
   const classes = useStyles();
@@ -34,9 +36,21 @@ const CheckSoil: React.FC = () => {
                     style={classes.stepper}
                   />
                 </div>
-                <div className={classes.smallContainer}>
-                  <Step1 classes={classes} />
-                </div>
+                {activeStep === 0 && (
+                  <div className={classes.smallContainer}>
+                    <Step1 classes={classes} />
+                  </div>
+                )}
+                {activeStep === 1 && (
+                  <div className={classes.bigContainer}>
+                    <Step2 />
+                  </div>
+                )}
+                {activeStep === 2 && (
+                  <div className={classes.bigContainer}>
+                    <Step3 />
+                  </div>
+                )}
               </div>
             </Grid>
           </Grid>
