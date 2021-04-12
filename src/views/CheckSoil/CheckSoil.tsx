@@ -5,6 +5,7 @@ import Stepper from "../components/Stepper";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
+import ProgressButtons from "./ProgressButtons";
 
 const CheckSoil: React.FC = () => {
   const classes = useStyles();
@@ -51,6 +52,14 @@ const CheckSoil: React.FC = () => {
                     <Step3 />
                   </div>
                 )}
+                <div className={classes.flexBar}>
+                  <ProgressButtons
+                    classes={classes}
+                    activeStep={activeStep}
+                    decrementStep={() => setActiveStep((prev) => prev + 1)}
+                    incrementStep={() => setActiveStep((prev) => prev - 1)}
+                  />
+                </div>
               </div>
             </Grid>
           </Grid>
