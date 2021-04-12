@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useStyles } from "./CheckSoilStyle";
 import Grid from "@material-ui/core/Grid";
 import Stepper from "../components/Stepper";
@@ -11,38 +11,14 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import MenuItem from "@material-ui/core/MenuItem";
 import fieldMasterData from "../master_data/fieldMasterData";
 import soilTypes from "../master_data/soilTypes";
-
-interface CheckSoilProps {
-  labelWidth: number;
-}
-
-interface inputProps {
-  soilType: number;
-  fieldType: number;
-  phResult: number;
-  ecResult: number;
-  caoResult: number;
-  mgoResult: number;
-  k2oResult: number;
-  p2o5Result: number;
-  no3nResult: number;
-}
+import { AnalysisResult } from "../../models/checkSoilType";
+import { AppContext } from "../../contexts/AppContext";
 
 const initialProps = {
   labelWidth: 0,
 };
 
-const initialState: inputProps = {
-  soilType: 1,
-  fieldType: 1,
-  phResult: 5.3,
-  ecResult: 0.62,
-  caoResult: 248,
-  mgoResult: 13,
-  k2oResult: 98,
-  p2o5Result: 59,
-  no3nResult: 1.0,
-};
+interface inputProps extends AnalysisResult {}
 
 const CheckSoil: React.FC = () => {
   const { labelWidth } = initialProps;
@@ -61,12 +37,30 @@ const CheckSoil: React.FC = () => {
     hash["name"],
   ]);
 
+  const { analysisResultState, dispatch } = useContext(AppContext);
+
   const [activeStep, setActiveStep] = useState<number>(0);
-  const [form, setForm] = useState<inputProps>(initialState);
+  const [form, setForm] = useState<inputProps>(analysisResultState);
+
+  const inputEvent = (
+    event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
+  ) => {
+    event.preventDefault();
+    const name = event.target.name;
+    const value = event.target.value;
+    dispatch({
+      type: "INPUT_EVENT",
+      payload: {
+        name: name as string,
+        value: value as number,
+      },
+    });
+  };
 
   const handleChange = (
     event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
   ) => {
+    inputEvent(event);
     setForm((prevForm) => ({
       ...prevForm,
       [event.target.name as string]: event.target.value,
@@ -105,8 +99,7 @@ const CheckSoil: React.FC = () => {
                           ほ場データ入力
                         </Typography>
                         <Typography variant="body1" gutterBottom>
-                          ※
-                          この画面の入力データを元にしてマスタデータを選択する。
+                          ※この画面の入力データを元にしてマスタデータを選択する。
                         </Typography>
                       </div>
                       <div style={{ marginBottom: 16 }}>
@@ -134,9 +127,13 @@ const CheckSoil: React.FC = () => {
                               />
                             }
                           >
-                            {selectFieldTypes.map((row: [number, string], index: number) => (
-                              <MenuItem key={index} value={row[0]}>{row[1]}</MenuItem>
-                            ))}
+                            {selectFieldTypes.map(
+                              (row: [number, string], index: number) => (
+                                <MenuItem key={index} value={row[0]}>
+                                  {row[1]}
+                                </MenuItem>
+                              )
+                            )}
                           </Select>
                         </FormControl>
                       </div>
@@ -165,9 +162,13 @@ const CheckSoil: React.FC = () => {
                               />
                             }
                           >
-                            {selectSoilTypes.map((row: [number, string], index: number) => (
-                              <MenuItem key={index} value={row[0]}>{row[1]}</MenuItem>
-                            ))}
+                            {selectSoilTypes.map(
+                              (row: [number, string], index: number) => (
+                                <MenuItem key={index} value={row[0]}>
+                                  {row[1]}
+                                </MenuItem>
+                              )
+                            )}
                           </Select>
                         </FormControl>
                       </div>
@@ -182,7 +183,5 @@ const CheckSoil: React.FC = () => {
     </>
   );
 };
-
-// CheckSoil.defaultProps = initialProps;
 
 export default CheckSoil;
