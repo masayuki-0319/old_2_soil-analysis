@@ -13,12 +13,7 @@ import fieldMasterData from "../master_data/fieldMasterData";
 import soilTypes from "../master_data/soilTypes";
 import { AppContext } from "../../contexts/AppContext";
 
-const initialProps = {
-  labelWidth: 0,
-};
-
 const CheckSoil: React.FC = () => {
-  const { labelWidth } = initialProps;
   const classes = useStyles();
   const steps: string[] = [
     "ほ場データの入力",
@@ -106,12 +101,7 @@ const CheckSoil: React.FC = () => {
                           <Select
                             value={analysisResultState.fieldType}
                             onChange={(e) => inputEvent(e)}
-                            input={
-                              <OutlinedInput
-                                labelWidth={labelWidth}
-                                name="fieldType"
-                              />
-                            }
+                            input={<OutlinedInput name="fieldType" />}
                           >
                             {selectFieldTypes.map(
                               (row: [number, string], index: number) => (
@@ -141,12 +131,7 @@ const CheckSoil: React.FC = () => {
                           <Select
                             value={analysisResultState.soilType}
                             onChange={(e) => inputEvent(e)}
-                            input={
-                              <OutlinedInput
-                                labelWidth={labelWidth}
-                                name="soilType"
-                              />
-                            }
+                            input={<OutlinedInput name="soilType" />}
                           >
                             {selectSoilTypes.map(
                               (row: [number, string], index: number) => (
