@@ -11,14 +11,11 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import MenuItem from "@material-ui/core/MenuItem";
 import fieldMasterData from "../master_data/fieldMasterData";
 import soilTypes from "../master_data/soilTypes";
-import { AnalysisResult } from "../../models/checkSoilType";
 import { AppContext } from "../../contexts/AppContext";
 
 const initialProps = {
   labelWidth: 0,
 };
-
-interface inputProps extends AnalysisResult {}
 
 const CheckSoil: React.FC = () => {
   const { labelWidth } = initialProps;
@@ -40,7 +37,6 @@ const CheckSoil: React.FC = () => {
   const { analysisResultState, dispatch } = useContext(AppContext);
 
   const [activeStep, setActiveStep] = useState<number>(0);
-  const [form, setForm] = useState<inputProps>(analysisResultState);
 
   const inputEvent = (
     event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
@@ -55,16 +51,6 @@ const CheckSoil: React.FC = () => {
         value: value as number,
       },
     });
-  };
-
-  const handleChange = (
-    event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
-  ) => {
-    inputEvent(event);
-    setForm((prevForm) => ({
-      ...prevForm,
-      [event.target.name as string]: event.target.value,
-    }));
   };
 
   return (
@@ -118,8 +104,8 @@ const CheckSoil: React.FC = () => {
                           className={classes.formControl}
                         >
                           <Select
-                            value={form.fieldType}
-                            onChange={handleChange}
+                            value={analysisResultState.fieldType}
+                            onChange={(e) => inputEvent(e)}
                             input={
                               <OutlinedInput
                                 labelWidth={labelWidth}
@@ -153,8 +139,8 @@ const CheckSoil: React.FC = () => {
                           className={classes.formControl}
                         >
                           <Select
-                            value={form.soilType}
-                            onChange={handleChange}
+                            value={analysisResultState.soilType}
+                            onChange={(e) => inputEvent(e)}
                             input={
                               <OutlinedInput
                                 labelWidth={labelWidth}
