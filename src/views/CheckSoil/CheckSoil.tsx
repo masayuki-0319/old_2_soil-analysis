@@ -38,13 +38,13 @@ const CheckSoil: React.FC = () => {
                   />
                 </div>
                 {activeStep === 0 && (
-                  <div className={classes.smallContainer}>
+                  <div className={classes.bigContainer}>
                     <Step1 classes={classes} />
                   </div>
                 )}
                 {activeStep === 1 && (
                   <div className={classes.bigContainer}>
-                    <Step2 />
+                    <Step2 classes={classes} />
                   </div>
                 )}
                 {activeStep === 2 && (
